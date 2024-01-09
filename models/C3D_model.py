@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from file_path import Path
+from PretrainModelPath import Path
 
 
 class C3D(nn.Module):

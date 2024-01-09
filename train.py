@@ -17,11 +17,14 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from tqdm import tqdm
 
+# if you want to debug, please set Debug = True
 Debug = False
+
+# change this to your own path
 Save_path = '/home/abbas/RHM_full/output'
 
+# device can be 'cuda:0' or 'cpu'. it would find the available gpu automatically.
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-# device = torch.device("cpu")
 
 if Debug:
     print("Device being used:", device)
