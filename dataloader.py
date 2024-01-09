@@ -36,7 +36,7 @@ from torch.utils.data import Dataset
 Dataset_Path = '/home/abbas/RHM_full'
 
 # Debug mode for printing out information. Set to False if you don't want to debug.
-Debug = True
+Debug = False
 
 
 class VideoDataset(Dataset):
