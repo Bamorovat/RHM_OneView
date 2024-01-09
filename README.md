@@ -32,7 +32,7 @@ This repository is dedicated to training one stream models, specifically C3D, Sl
 
 ## System Requirements
 
-- Python 3.x
+- Python 3.8
 - PyTorch
 - OpenCV
 - NumPy
