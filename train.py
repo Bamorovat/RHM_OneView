@@ -17,10 +17,14 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from tqdm import tqdm
 
+Debug = False
+Save_path = '/home/abbas/RHM_full/output'
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 # device = torch.device("cpu")
-print("Device being used:", device)
+
+if Debug:
+    print("Device being used:", device)
 
 y_pred = []
 y_true = []
@@ -31,12 +35,11 @@ class AverageMeter(object):
     """Computes and stores the average and current value"""
 
     def __init__(self):
-        
         self.val = 0
         self.avg = 0
         self.sum = 0
         self.count = 0
-        
+
         self.reset()
 
     def reset(self):
@@ -82,9 +85,9 @@ def train(model, train_dataloader, epoch, criterion, optimizer, writer):
     print_string = 'Epoch: [{0}][{1}/{2}]'.format(epoch, 1, len(train_dataloader))
     print(print_string)
 
-    train_loop = tqdm(enumerate(train_dataloader), total = len(train_dataloader), leave=False)
+    train_loop = tqdm(enumerate(train_dataloader), total=len(train_dataloader), leave=False)
 
-    for step, (inputs1,labels) in train_loop:
+    for step, (inputs1, labels) in train_loop:
         data_time.update(time.time() - end)
 
         inputs1 = inputs1.to(device)
@@ -112,12 +115,12 @@ def train(model, train_dataloader, epoch, criterion, optimizer, writer):
     print_string = 'Epoch: [{0}][{1}/{2}]'.format(epoch, step + 1, len(train_dataloader))
     print(print_string)
     print_string = 'data_time: {data_time:.3f}, batch time: {batch_time:.3f}'.format(
-                data_time=data_time.val, batch_time=batch_time.val)
+        data_time=data_time.val, batch_time=batch_time.val)
     print(print_string)
     print_string = 'loss: {loss:.5f}'.format(loss=losses.avg)
     print(print_string)
     print_string = 'Top-1 accuracy: {top1_acc:.2f}%, Top-5 accuracy: {top5_acc:.2f}%'.format(
-                top1_acc=top1.avg, top5_acc=top5.avg)
+        top1_acc=top1.avg, top5_acc=top5.avg)
     print(print_string)
 
     writer.add_scalar('train_loss_epoch', losses.avg, epoch)
@@ -140,7 +143,7 @@ def validation(model, val_dataloader, epoch, criterion, optimizer, writer):
     print(print_string)
 
     with torch.no_grad():
-        val_loop = tqdm(enumerate(val_dataloader), total = len(val_dataloader), leave=False)
+        val_loop = tqdm(enumerate(val_dataloader), total=len(val_dataloader), leave=False)
         for step, (inputs1, labels) in val_loop:
             data_time.update(time.time() - end)
             inputs1 = inputs1.to(device)
@@ -163,12 +166,12 @@ def validation(model, val_dataloader, epoch, criterion, optimizer, writer):
     print_string = 'Epoch: [{0}][{1}/{2}]'.format(epoch, step + 1, len(val_dataloader))
     print(print_string)
     print_string = 'data_time: {data_time:.3f}, batch time: {batch_time:.3f}'.format(
-                    data_time=data_time.val, batch_time=batch_time.val)
+        data_time=data_time.val, batch_time=batch_time.val)
     print(print_string)
     print_string = 'loss: {loss:.5f}'.format(loss=losses.avg)
     print(print_string)
     print_string = 'Top-1 accuracy: {top1_acc:.2f}%, Top-5 accuracy: {top5_acc:.2f}%'.format(
-                    top1_acc=top1.avg,top5_acc=top5.avg)
+        top1_acc=top1.avg, top5_acc=top5.avg)
     print(print_string)
 
     writer.add_scalar('val_loss_epoch', losses.avg, epoch)
@@ -189,11 +192,11 @@ def test(model, test_dataloader, epoch, criterion, optimizer, writer, better):
     end = time.time()
 
     print('---- Start Test ----')
-    print_string = 'Epoch: [{0}][{1}/{2}]'.format(epoch,  1, len(test_dataloader))
+    print_string = 'Epoch: [{0}][{1}/{2}]'.format(epoch, 1, len(test_dataloader))
     print(print_string)
 
     with torch.no_grad():
-        test_loop = tqdm(enumerate(test_dataloader), total = len(test_dataloader), leave=False)
+        test_loop = tqdm(enumerate(test_dataloader), total=len(test_dataloader), leave=False)
         for step, (inputs1, labels) in test_loop:
             data_time.update(time.time() - end)
             inputs1 = inputs1.to(device)
@@ -222,12 +225,12 @@ def test(model, test_dataloader, epoch, criterion, optimizer, writer, better):
     print_string = 'Epoch: [{0}][{1}/{2}]'.format(epoch, step + 1, len(test_dataloader))
     print(print_string)
     print_string = 'data_time: {data_time:.3f}, batch time: {batch_time:.3f}'.format(
-                    data_time=data_time.val, batch_time=batch_time.val)
+        data_time=data_time.val, batch_time=batch_time.val)
     print(print_string)
     print_string = 'loss: {loss:.5f}'.format(loss=losses.avg)
     print(print_string)
     print_string = 'Top-1 accuracy: {top1_acc:.2f}%, Top-5 accuracy: {top5_acc:.2f}%'.format(
-                    top1_acc=top1.avg, top5_acc=top5.avg)
+        top1_acc=top1.avg, top5_acc=top5.avg)
     print(print_string)
 
     writer.add_scalar('test_loss_epoch', losses.avg, epoch)
@@ -239,23 +242,26 @@ def test(model, test_dataloader, epoch, criterion, optimizer, writer, better):
     if top1_acc > best_test_acc1:
         # constant for classes
         classes = ['Bending', 'SittingDown', 'ClosingCan', 'Reaching', 'Walking', 'Drinking', 'StairsClimbingUp',
-               'StairsClimbingDown', 'StandingUp', 'OpeningCan', 'CarryingObject', 'Cleaning', 'PuttingDownObjects',
-               'LiftingObject']
+                   'StairsClimbingDown', 'StandingUp', 'OpeningCan', 'CarryingObject', 'Cleaning', 'PuttingDownObjects',
+                   'LiftingObject']
 
         # Build confusion matrix
         cf_matrix = confusion_matrix(y_true, y_pred)
         df_cm = pd.DataFrame(cf_matrix / np.sum(cf_matrix) * 10, index=[i for i in classes],
-                         columns=[i for i in classes])
+                             columns=[i for i in classes])
         plt.figure(figsize=(15, 10))
         sn.heatmap(df_cm, annot=True)
 
-        save_name = '/home/mb19aag/test/RH_HAR_Oneview/output' + 'confM' + '-' + params['view1'] + params['situation'] + '.' + 'png'
+        save_name = Save_path + 'confM' + '-' + params['view'] + params['view_status'] + '.' + 'png'
         plt.savefig(save_name)
-        
+
     best_test_acc1 = max(top1_acc, best_test_acc1)
 
 
 def main():
+    if Debug:
+        print('Start training...')
+
     val_acc = 0.0
     cudnn.benchmark = False
     useTest = params['useTest']
@@ -266,35 +272,60 @@ def main():
     run_id = int(runs[-1].split('_')[-1]) + 1 if runs else 0
 
     save_dir = os.path.join(save_dir_root, 'run', 'run_' + str(run_id))
-    saveName = params['model_name'] + '_' + params['view1'] + '_' + str(params['weight_decay'])
-    #saveName = 'testgood'
-    cur_time = time.strftime('%Y-%m-%d-%H-%M-%S', time.localtime(time.time()))    
+    save_dir_models = os.path.join(save_dir, 'models')
+    saveName = (params['model_name'] + '-' + params['view'] + '-' + params['view_status'])
+
+    cur_time = time.strftime('%Y-%m-%d-%H-%M-%S', time.localtime(time.time()))
     logdir = os.path.join('log', cur_time)
+
+    if Debug:
+        print('save_dir= ', save_dir)
+        print('save_dir_models= ', save_dir_models)
+        print('saveName= ', saveName)
+        print('logdir= ', logdir)
+        print('cur_time= ', cur_time)
+
     if not os.path.exists(logdir):
         os.makedirs(logdir)
 
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+
+    if not os.path.exists(save_dir_models):
+        os.makedirs(save_dir_models)
+
     writer = SummaryWriter(log_dir=logdir)
 
-    print("Loading dataset")
+    if Debug:
+        print("Loading dataset ...")
+        print('loading train_dataloader ...')
 
-    train_dataloader = \
-        DataLoader(
-            VideoDataset(view1=params['view1'], situation= params['situation'], split='train', clip_len=params['clip_len']),
-            batch_size=params['batch_size'], shuffle=True, num_workers=params['num_workers'])
+    train_dataloader = DataLoader(VideoDataset(view=params['view'], view_status=params['view_status'], split='train',
+                                               clip_len=params['clip_len']), batch_size=params['batch_size'],
+                                  shuffle=True, num_workers=params['num_workers'])
 
-    val_dataloader = \
-        DataLoader(
-            VideoDataset(view1=params['view1'], situation= params['situation'], split='val', clip_len=params['clip_len']),
-            batch_size=params['batch_size'], shuffle=True, num_workers=params['num_workers'])
+    if Debug:
+        print('loading val_dataloader ...')
 
-    test_dataloader = \
-        DataLoader(
-            VideoDataset(view1=params['view1'], situation= params['situation'], split='test', clip_len=params['clip_len']),
-            batch_size=params['batch_size'], shuffle=True, num_workers=params['num_workers'])
+    val_dataloader = DataLoader(VideoDataset(view=params['view'], view_status=params['view_status'], split='val',
+                                             clip_len=params['clip_len']), batch_size=params['batch_size'],
+                                shuffle=True, num_workers=params['num_workers'])
 
-    print("load model")
+    if Debug:
+        print('loading test_dataloader ...')
+
+    test_dataloader = DataLoader(VideoDataset(view=params['view'], view_status=params['view_status'], split='test',
+                                              clip_len=params['clip_len']), batch_size=params['batch_size'],
+                                 shuffle=True, num_workers=params['num_workers'])
+
+    if Debug:
+        print("loading model ... ")
+
     modelName = params['model_name']
-    
+
+    if Debug:
+        print('modelName= ', modelName)
+
     if modelName == 'C3D_model':
         model = C3D_model.C3D(num_classes=params['num_classes'], pretrained=params['pretrained'])
         train_params = [{'params': C3D_model.get_1x_lr_params(model), 'lr': params['learning_rate']},
@@ -308,7 +339,7 @@ def main():
         train_params = model.parameters()
     elif modelName == 'Slow_Fast':
         model = Slow_Fast_model.resnet50(class_num=params['num_classes'])
-        train_params = model.parameters()    
+        train_params = model.parameters()
     else:
         print('The model is not defined.')
         raise NotImplementedError
@@ -324,6 +355,8 @@ def main():
     print('Total params: %.2fM' % (sum(p.numel() for p in model.parameters()) / 1000000.0))
 
     best_acc1 = 0.0
+    better = False
+
     for epoch in range(params['epoch_num']):
         for phase in ['train', 'val']:
             if phase == 'train':
@@ -336,7 +369,16 @@ def main():
             # remember best acc@1 and save checkpoint
             is_best = acc1 > best_acc1
             best_acc1 = max(acc1, best_acc1)
-        better = False
+
+        if is_best:
+            torch.save({
+                'epoch': epoch + 1,
+                'best_acc1': best_acc1,
+                'state_dict': model.state_dict(),
+                'opt_dict': optimizer.state_dict(), }, os.path.join(save_dir_models, saveName + '.pth'))
+            print("Save model at {}\n".format(os.path.join(save_dir_models, saveName + '.pth')))
+            better = True
+            print("Saved Epoch Number is: ", epoch)
 
         test(model, test_dataloader, epoch, criterion, optimizer, writer, better)
 
@@ -345,4 +387,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

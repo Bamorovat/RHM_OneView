@@ -1,8 +1,8 @@
 params = dict()
 
 params['dataset'] = 'RHM'
-params['view1'] = 'OmniView'
-params['situation'] = 'Normal'
+params['view'] = 'OmniView'
+params['view_status'] = 'Normal'
 params['model_name'] = 'C3D_model'
 params['num_classes'] = 14
 params['epoch_num'] = 300
