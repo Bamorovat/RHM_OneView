@@ -1,3 +1,22 @@
+"""
+Author: Mohammad Hossein Bamorovat Abadi
+Email: m.bamorovvat@gmail.com
+date: 2024/01/09
+
+This file is used to train the model
+
+You can change the configs like view, view_status, model_name, num_classes, epoch_num, in the config.py
+
+The model_name list is: DualStreamC3D, SlowFast_Multiview
+The dataset list is: RHM
+The view list is: FrontView, BackView, OmniView, RobotView
+The view_status list is: NormalFrame, MotionAggregation, FrameVariationMapper, DifferentialMotionTrajectory, Normal,
+Subtract, OpticalFlow, MotionHistoryImages
+The num_classes list is: 14
+
+License: GNU General Public License (GPL) v3.0
+"""
+
 import os
 import time
 import numpy as np

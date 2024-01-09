@@ -1,4 +1,8 @@
 """
+Author: Mohammad Hossein Bamorovat Abadi
+Email: m.bamorovvat@gmail.com
+date: 2024/01/09
+
 This file contains the dataloader for the RHM dataset. The dataloader loads the video frames from the RHM dataset
 and performs preprocessing on them. The preprocessing includes cropping, normalizing, and converting the frames to
 tensor. The dataloader also performs data augmentation on the training set by randomly flipping the frames
@@ -9,19 +13,14 @@ DifferentialMotionTrajectory, Normal, Subtract, OpticalFlow, and MotionHistoryIm
 different classes.
 
 The dataloader takes in the following parameters:
-view: View type.
-view_status: Frame status for view.
+view: First view type.
+view_status: Frame status for view1.
 split: Determines which list file to read from ('train', 'val', or 'test').
 clip_len: Number of frames per clip.
-
 
 The dataloader returns the following:
 buffer1: The video frames from view
 labels: The label for the video
-
-
-Author: Mohammad Hossein Bamorovat Abadi
-Email: m.bamorovvat@gmail.com
 
 License: GNU General Public License (GPL) v3.0
 """
