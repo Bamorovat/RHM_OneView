@@ -69,7 +69,7 @@ This repository is dedicated to training one stream models, specifically C3D, Sl
 
 Before using the RHM dataset with this repository, you may need to process the video files to extract frames. To facilitate this, you can use a separate repository designed for video frame extraction. Follow the steps below:
 
-1. Use the [RHM Dataset Frame Extraction](https://gitlab.com/robothouse/rh-user/rhm_frame_extraction) repository to extract frames from the RHM dataset videos.
+1. Use the [RHM Dataset Frame Extraction](https://github.com/Bamorovat/RHM_OneView.git) repository to extract frames from the RHM dataset videos.
 
 ## RHM Help
 
