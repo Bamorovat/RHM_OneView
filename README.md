@@ -45,7 +45,7 @@ This repository is dedicated to training one stream models, specifically C3D, Sl
 
 1. Clone the repository:
     ```bash
-    git clone https://gitlab.com/robothouse/rh-user/rhm_oneview.git
+    git clone https://github.com/Bamorovat/RHM_OneView.git
     ```
 
 2. Install the required packages:
@@ -69,7 +69,7 @@ This repository is dedicated to training one stream models, specifically C3D, Sl
 
 Before using the RHM dataset with this repository, you may need to process the video files to extract frames. To facilitate this, you can use a separate repository designed for video frame extraction. Follow the steps below:
 
-1. Use the [RHM Dataset Frame Extraction](https://github.com/Bamorovat/RHM_OneView.git) repository to extract frames from the RHM dataset videos.
+1. Use the [RHM Dataset Frame Extraction](https://github.com/Bamorovat/RHM_Frame_Feature_Extractor.git) repository to extract frames from the RHM dataset videos.
 
 ## RHM Help
 
