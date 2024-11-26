@@ -1,3 +1,5 @@
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/rhm-robot-house-multi-view-human-activity/human-activity-recognition-on-rhm)](https://paperswithcode.com/sota/human-activity-recognition-on-rhm?p=rhm-robot-house-multi-view-human-activity)
+
 # One Stream Model Training with RHM Dataset
 
 This repository is dedicated to training one stream models, specifically C3D, SlowFast, R2+1D, and R3D, using the RHM (Robotics Human Monitoring) dataset. It's optimized for advanced video analysis tasks in robotics through single-stream video processing.
